@@ -52,8 +52,10 @@ Sistema completo para gerenciamento de corpus textual voltado a projetos de pesq
 
 ## Início Rápido
 
+> **Um único comando** instala tudo, inicia a API, o dashboard e abre o navegador automaticamente.
+
 ### Requisitos
-- Python 3.10 ou superior
+- Python 3.10 ou superior (verifique com `python --version`)
 
 ### Windows
 
@@ -68,23 +70,39 @@ cd LingCorpus-Platform
 ```bash
 git clone https://github.com/jardelva96/LingCorpus-Platform.git
 cd LingCorpus-Platform
-chmod +x run.sh
-./run.sh
+chmod +x run.sh && ./run.sh
 ```
 
-O script irá:
-1. Criar um ambiente virtual (`.venv`)
-2. Instalar todas as dependências
-3. Iniciar a API REST na porta **8000**
-4. Abrir o dashboard Streamlit na porta **8501**
+### O que acontece ao executar
+
+```
+  [1/4] Criando ambiente virtual...
+  [2/4] Verificando dependencias...
+  [3/4] Iniciando API REST (porta 8000)...
+         API pronta!
+  [4/4] Abrindo dashboard no navegador...
+```
+
+O script cuida de **tudo automaticamente**:
+1. Cria o ambiente virtual Python (`.venv`)
+2. Instala todas as dependências
+3. Inicia a API REST em background (porta 8000)
+4. Abre o dashboard no navegador (porta 8501)
 
 ### Credenciais padrão
-| Usuário | Senha |
-|---|---|
-| `admin` | `admin123` |
 
-### Documentação da API
-Acesse `http://localhost:8000/docs` para a documentação Swagger interativa.
+| Usuário | Senha | Papel |
+|---|---|---|
+| `admin` | `admin123` | Administrador (acesso total) |
+
+### Links úteis após iniciar
+
+| Serviço | URL |
+|---|---|
+| **Dashboard** | http://localhost:8501 |
+| **API Swagger** | http://localhost:8000/docs |
+| **API ReDoc** | http://localhost:8000/redoc |
+| **Health Check** | http://localhost:8000/health |
 
 ---
 
