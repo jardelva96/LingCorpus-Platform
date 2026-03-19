@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lingcorpus-platform"
+version = "0.1.0"
+description = "Plataforma web para gerenciamento, validação e análise de corpus textual de pesquisa"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    {name = "Jardel Vieira Alves", email = "jardel.va96@gmail.com"},
+]
+keywords = [
+    "corpus", "linguistics", "nlp", "computational-linguistics",
+    "text-analysis", "data-validation", "research-platform",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Text Processing :: Linguistic",
+]
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.13.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "python-jose[cryptography]>=3.3.0",
+    "bcrypt>=4.0.0",
+    "python-multipart>=0.0.6",
+    "streamlit>=1.29.0",
+    "pandas>=2.1.0",
+    "plotly>=5.18.0",
+    "nltk>=3.8.0",
+    "chardet>=5.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "httpx>=0.25.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+lingcorpus-api = "lingcorpus.app:main"
+lingcorpus-dashboard = "lingcorpus.dashboard:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F", "I", "N", "UP", "S", "B", "A",
+    "COM", "C4", "ISC", "ICN", "PIE", "PT", "RSE",
+    "RET", "SLF", "SIM", "TID", "TCH", "ARG", "ERA",
+    "PL", "TRY", "FLY", "PERF", "RUF",
+]
+ignore = [
+    "S101", "TRY003", "PLR0913", "COM812", "ISC001",
+    "B008",     # Depends() em defaults é padrão FastAPI
+    "TC002",    # imports usados em runtime (SQLAlchemy Session)
+    "PLC0415",  # imports dentro de funções (evitar circular)
+    "S104",     # bind 0.0.0.0 é intencional para dev server
+    "ARG001",   # args não usados em endpoints FastAPI (injeção)
+    "ERA001",   # código comentado
+    "PLR2004",  # magic values em HTTP status codes e testes
+    "TRY300",   # return dentro de try é ok para verificação simples
+    "RET504",   # assignment antes de return para clareza
+    "TC003",    # imports usados em runtime com from __future__ annotations
+    "S105",     # "bearer" não é uma senha
+    "PLR0915",  # funções de dashboard são naturalmente longas
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
