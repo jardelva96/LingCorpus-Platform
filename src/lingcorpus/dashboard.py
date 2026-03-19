@@ -46,7 +46,7 @@ def _login_page():
         st.markdown("### Login")
         username = st.text_input("Usuário")
         password = st.text_input("Senha", type="password")
-        submitted = st.form_submit_button("Entrar", use_container_width=True)
+        submitted = st.form_submit_button("Entrar", width="stretch")
 
         if submitted and username and password:
             r = _api("POST", "/api/auth/login",
@@ -68,7 +68,7 @@ def _login_page():
         new_name = st.text_input("Nome completo", key="reg_name")
         new_pass = st.text_input("Senha", type="password", key="reg_pass")
         role = st.selectbox("Papel", ["visitante", "pesquisador"])
-        reg_submit = st.form_submit_button("Registrar", use_container_width=True)
+        reg_submit = st.form_submit_button("Registrar", width="stretch")
 
         if reg_submit and new_user and new_email and new_pass and new_name:
             r = _api("POST", "/api/auth/register", json={
@@ -116,7 +116,7 @@ def _tab_overview():
         df = pd.DataFrame(corpora)
         df = df[["id", "name", "language", "document_count", "created_at"]]
         df.columns = ["ID", "Nome", "Idioma", "Documentos", "Criado em"]
-        st.dataframe(df, use_container_width=True, hide_index=True)
+        st.dataframe(df, width="stretch", hide_index=True)
     else:
         st.info("Nenhum corpus cadastrado. Use a aba **Corpus** para criar um.")
 
@@ -134,7 +134,7 @@ def _tab_corpus():
         name = st.text_input("Nome do corpus")
         desc = st.text_area("Descrição")
         lang = st.selectbox("Idioma", ["pt", "en", "es"], index=0)
-        if st.form_submit_button("Criar", use_container_width=True):
+        if st.form_submit_button("Criar", width="stretch"):
             r = _api("POST", "/api/corpus/", json={
                 "name": name, "description": desc, "language": lang,
             })
@@ -193,7 +193,7 @@ def _tab_corpus():
                     "type_count", "validation_status"]
             df = df[[c for c in cols if c in df.columns]]
             df.columns = ["ID", "Arquivo", "Codificação", "Tokens", "Types", "Status"]
-            st.dataframe(df, use_container_width=True, hide_index=True)
+            st.dataframe(df, width="stretch", hide_index=True)
 
 
 def _tab_validation():
@@ -347,9 +347,9 @@ def _tab_analysis():
                 color_continuous_scale="Viridis",
             )
             fig.update_layout(showlegend=False)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
-            st.dataframe(df, use_container_width=True, hide_index=True)
+            st.dataframe(df, width="stretch", hide_index=True)
 
     # Concordância
     st.markdown("#### Concordância KWIC")
@@ -368,7 +368,7 @@ def _tab_analysis():
             if lines:
                 df = pd.DataFrame(lines)
                 df.columns = ["Contexto esquerdo", "Palavra", "Contexto direito", "Documento"]
-                st.dataframe(df, use_container_width=True, hide_index=True)
+                st.dataframe(df, width="stretch", hide_index=True)
                 st.caption(f"{len(lines)} ocorrência(s) encontrada(s).")
             else:
                 st.info(f"Nenhuma ocorrência de '{keyword}' encontrada.")
@@ -394,7 +394,7 @@ def _tab_analysis():
                 color="Frequência",
                 color_continuous_scale="Tealgrn",
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
 
 def _tab_users():
@@ -428,7 +428,7 @@ def _tab_users():
     df = pd.DataFrame(users)
     df = df[["id", "username", "full_name", "email", "role", "is_active", "created_at"]]
     df.columns = ["ID", "Usuário", "Nome", "Email", "Papel", "Ativo", "Criado em"]
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    st.dataframe(df, width="stretch", hide_index=True)
 
     st.markdown("#### Alterar papel de usuário")
     user_options = {u["username"]: u["id"] for u in users}
